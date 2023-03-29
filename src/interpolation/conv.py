@@ -20,6 +20,7 @@ def conv1d_interpolate(x_measure: np.array, y_measure: np.array, x_interpolate: 
 
 def image_interpolate(image: np.array, kernel: callable, ratio: int) -> np.array:
     """Interpolate an image using a convolution kernel"""
+
     def row_column_interpolate(row: np.array) -> np.array:
         """Interpolate a single row or column of the image"""
         x_measure = np.arange(len(row))
