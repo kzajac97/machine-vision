@@ -4,7 +4,7 @@ from skimage.util import view_as_windows
 
 def downsample(image: np.array, kernel_size: int = 2) -> np.array:
     """Downsample an image using a convolution kernel"""
-    kernel = np.ones((kernel_size, kernel_size)) / kernel_size ** 2
+    kernel = np.ones((kernel_size, kernel_size)) / kernel_size**2
     windows = view_as_windows(image, window_shape=kernel_size, step=kernel_size)
     return np.apply_over_axes(np.sum, windows * kernel, axes=(2, 3)).squeeze()
 
