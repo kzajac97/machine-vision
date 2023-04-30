@@ -17,4 +17,4 @@ for each class should all contain links to resources useful for given class.
 | Rolling Shutter         | `notebooks/processing/rolling-shutter.ipynb`           |                 |
 | Demosaicking            | `notebooks/processing/mosaicking.ipynb`                |                 |
 | Poissoning              | `notebooks/processing/poissoning.ipynb`                |                 |
-| Depoissoning            | `notebooks/processing/depoissoning.ipynb`              |                 |
+| Depoissoning            | `notebooks/processing/poissoning.ipynb`              |                 |
