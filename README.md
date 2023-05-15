@@ -9,9 +9,12 @@ for each class should all contain links to resources useful for given class.
 
 ### Classes
 
-| Subject                 | Entrypoint                               | Note            |
-|-------------------------|------------------------------------------|-----------------|
-| Rolling Shutter         | `notebooks/rolling-shutter.ipynb`        | Warmup class    |
-| Function Interpolation  | `notebooks/function-interpolation.ipynb` |                 |
-| Image Interpolation     | `notebooks/image-interpolation.ipynb`    |                 |
-| Image Interpolation     | `notebooks/conv-transpose.ipynb`         | Auxiliary class |
+| Subject                 | Entrypoint                                             | Note            |
+|-------------------------|--------------------------------------------------------|-----------------|
+| Function Interpolation  | `notebooks/interpolation/function-interpolation.ipynb` |                 |
+| Image Interpolation     | `notebooks/interpolation/image-interpolation.ipynb`    |                 |
+| Image Interpolation     | `notebooks/interpolation/conv-transpose.ipynb`         | Auxiliary class |
+| Rolling Shutter         | `notebooks/processing/rolling-shutter.ipynb`           |                 |
+| Demosaicking            | `notebooks/processing/mosaicking.ipynb`                |                 |
+| Poissoning              | `notebooks/processing/poissoning.ipynb`                |                 |
+| Depoissoning            | `notebooks/processing/poissoning.ipynb`              |                 |
