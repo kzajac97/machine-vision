@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def apply_rgb(func: callable, image: np.array) -> np.array:
+def apply_rgb(func: callable, image: np.array, *args, **kwargs) -> np.array:
     """
     Applies a function to each color channel of an image.
 
@@ -10,4 +10,4 @@ def apply_rgb(func: callable, image: np.array) -> np.array:
 
     :return: image after function has been applied to each color channel
     """
-    return np.dstack([func(image[:, :, channel]) for channel in range(3)])
+    return np.dstack([func(image[:, :, channel], *args, **kwargs) for channel in range(3)])
