@@ -1,4 +1,4 @@
-# Rolling Shutter
+# Aliasing
 
 Auxiliary class about simulating the rolling shutter effect in python.
 

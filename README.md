@@ -11,7 +11,7 @@ for each class should all contain links to resources useful for given class.
 
 | Subject                 | Path                      | Note            |
 |-------------------------|---------------------------|-----------------|
-| Rolling Shutter         | `classes/rolling_shutter` | Auxiliary class |
+| Rolling Shutter         | `classes/aliasing`        | Auxiliary class |
 | Function Interpolation  | `classes/interpolation`   |                 |
 | Image Interpolation     | `classes/interpolation`   |                 |
 | Demosaicking            | `classes/demosaicking`    |                 |
@@ -23,7 +23,7 @@ for each class should all contain links to resources useful for given class.
 | Subject                 | Path                    | Note            |
 |-------------------------|-------------------------|-----------------|
 | Python Intro            | TBA                     |                 |
-| Scling and rotation     | `classes/interpolation` |                 |
-| Denoising               | TBA                     |                 |
+| Aliasing                | `classes/aliasing`      |                 |
+| Scaling and rotation    | `classes/interpolation` |                 |
+| Convolutions            | TBA                     |                 |
 | Compression             | `classes/compression`   |                 |
-| Coding                  | TBA                     |                 |
