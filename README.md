@@ -1,7 +1,7 @@
 # Machine Vision
 
 This repository contains notebooks and source code for laboratories of two courses: *Machine
-Learning and Machine Vision* and *Digtal Signals and Images* on Wrocław University of Science and Technology.
+Learning and Machine Vision* and *Digital Signals and Images* on Wrocław University of Science and Technology.
 
 The course covers low-level image processing methods and some photography
 related problems (for example rolling shutter). Notebooks marked as entrypoint
