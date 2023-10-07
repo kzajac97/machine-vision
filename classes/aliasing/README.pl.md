@@ -1,6 +1,6 @@
 # Aliasing
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/kzajac97/machine-vision/edit/main/classes/aliasing/README.md)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/kzajac97/machine-vision/blob/main/classes/aliasing/README.md)
 <a target="_blank" href="https://colab.research.google.com/github/kzajac97/machine-vision/blob/main/classes/aliasing/rolling-shutter.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
