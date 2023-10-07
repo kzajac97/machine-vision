@@ -15,7 +15,7 @@ for each class should all contain links to resources useful for given class.
 | Function Interpolation  | `classes/interpolation`   |                 |
 | Image Interpolation     | `classes/interpolation`   |                 |
 | Demosaicking            | `classes/demosaicking`    |                 |
-| Poisson Noise           | `classes/poisson`         |                 |
+| Poisson Noise           | `classes/poisson`         |                 |   
 | Compression             | `classes/compression`     |                 |
 
 ## Digtal Signals and Images
