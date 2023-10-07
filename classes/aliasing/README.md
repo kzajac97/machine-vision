@@ -1,8 +1,15 @@
 # Aliasing
 
-Auxiliary class about simulating the rolling shutter effect in python.
+[![en](https://img.shields.io/badge/lang-pl-red.svg)](https://github.com/kzajac97/machine-vision/edit/main/classes/aliasing/README.pl.md)
+<a target="_blank" href="https://colab.research.google.com/github/kzajac97/machine-vision/blob/main/classes/aliasing/rolling-shutter.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
-The instruction is available [here](http://konrad.kluwak.staff.iiar.pwr.edu.pl/wp-content/uploads/2022/10/0-Aliasing2D.pdf).
+The goal of the exercise is to simulate aliasing effect occuring, when photographing a fast moving object with CMOS sensor.
+
+## Resources
+
+PDF instruction is available [here](http://konrad.kluwak.staff.iiar.pwr.edu.pl/wp-content/uploads/2022/10/0-Aliasing2D.pdf).
 
 Useful resources:
 * [Smarter Every Day @ YouTube](https://www.youtube.com/watch?v=dNVtMmLlnoE)
