@@ -18,12 +18,12 @@ for each class should all contain links to resources useful for given class.
 | Poisson Noise           | `classes/poisson`         |                 |   
 | Compression             | `classes/compression`     |                 |
 
-## Digtal Signals and Images
+## Digital Signals and Images
 
-| Subject                 | Path                    | Note            |
-|-------------------------|-------------------------|-----------------|
-| Python Intro            | TBA                     |                 |
-| Aliasing                | `classes/aliasing`      |                 |
-| Scaling and rotation    | `classes/interpolation` |                 |
-| Convolutions            | TBA                     |                 |
-| Compression             | `classes/compression`   |                 |
+| Subject       | Path                    | Note |
+|---------------|-------------------------|------|
+| Python Intro  | TBA                     |      |
+| Aliasing      | `classes/aliasing`      |      |
+| Interpolation | `classes/interpolation` |      |
+| Compression   | `classes/compression`   |      |
+| TBA           | TBA                     |      |
