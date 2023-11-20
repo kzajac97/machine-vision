@@ -20,10 +20,10 @@ for each class should all contain links to resources useful for given class.
 
 ## Digital Signals and Images
 
-| Subject       | Path                    | Note |
-|---------------|-------------------------|------|
-| Python Intro  | TBA                     |      |
-| Aliasing      | `classes/aliasing`      |      |
-| Interpolation | `classes/interpolation` |      |
-| Compression   | `classes/compression`   |      |
-| TBA           | TBA                     |      |
+| Subject       | Path                    | Note      |
+|---------------|-------------------------|-----------|
+| Aliasing      | `classes/aliasing`      |           |
+| Interpolation | `classes/interpolation` | 1D and 2D |
+| Processing    | `classes/demosaicking`  |           |
+| Convolution   | TBA                     |           |  
+| Compression   | `classes/compression`   |           |
