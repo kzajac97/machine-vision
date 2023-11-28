@@ -12,7 +12,7 @@ class PlotData(NamedTuple):
 
 def plot_interpolation(measure: PlotData, interpolation: PlotData, real: PlotData, figsize=(12, 8)):
     """Plot the interpolation, measurements and the real function"""
-    figure = plt.figure(figsize=figsize)
+    figure = plt.figure(figsize=figsize)  # noqa
 
     plt.scatter(measure.x, measure.y, label="Measurements")
     plt.plot(interpolation.x, interpolation.y, label="Interpolation")
