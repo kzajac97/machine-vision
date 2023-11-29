@@ -83,6 +83,7 @@ def keys_kernel2d(x: NDArray, offset: float, width: float, alpha: float = -0.5) 
         * https://en.wikipedia.org/wiki/Bicubic_interpolation#Bicubic_convolution_algorithm
         * http://verona.fi-p.unam.mx/boris/practicas/CubConvInterp.pdf
     """
+
     def xy_range(xs: NDArray, ys: NDArray, xlow: float, xhigh: float, ylow: float, yhigh: float) -> NDArray:
         return (xs >= xlow) * (xs < xhigh) * (ys >= ylow) * (ys < yhigh)
 

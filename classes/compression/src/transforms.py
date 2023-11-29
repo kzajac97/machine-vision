@@ -3,6 +3,7 @@ from typing import Optional
 
 import numpy as np
 import pywt
+from numpy.typing import NDArray
 
 
 class CompressionTransform:
@@ -11,11 +12,11 @@ class CompressionTransform:
     """
 
     @abstractmethod
-    def forward(self, variables: np.array) -> np.array:
+    def forward(self, variables: NDArray) -> NDArray:
         ...
 
     @abstractmethod
-    def backward(self, variables: np.array) -> np.array:
+    def backward(self, variables: NDArray) -> NDArray:
         ...
 
 
@@ -25,10 +26,10 @@ class FourierTransform2D(CompressionTransform):
     Inverse transform uses absolute value by default.
     """
 
-    def forward(self, variables: np.array) -> np.array:
+    def forward(self, variables: NDArray) -> NDArray:
         return np.fft.fft2(variables)
 
-    def backward(self, variables: np.array) -> np.array:
+    def backward(self, variables: NDArray) -> NDArray:
         return np.abs(np.fft.ifft2(variables))
 
 
@@ -40,24 +41,24 @@ class WaveletTransform2D(CompressionTransform):
     def __init__(self, wavelet_name: str, level: int):
         self.wavelet_name = wavelet_name
         self.level = level
-        self.slices: Optional[np.array] = None
+        self.slices: Optional[NDArray] = None
 
-    def forward(self, variables: np.array) -> np.array:
+    def forward(self, variables: NDArray) -> NDArray:
         transformed = pywt.wavedec2(variables, self.wavelet_name, level=self.level)
         coefficients, slices = pywt.coeffs_to_array(transformed)
         self.slices = slices
 
         return coefficients
 
-    def backward(self, variables: np.array) -> np.array:
+    def backward(self, variables: NDArray) -> NDArray:
         if self.slices is None:
             raise ValueError("Cannot perform inverse transform without first performing forward transform!")
 
-        variables = pywt.array_to_coeffs(variables, self.slices, output_format="wavedec2")
+        variables = pywt.array_to_coeffs(variables, self.slices, output_format="wavedec2")  # type: ignore
         return pywt.waverec2(variables, self.wavelet_name)
 
 
-def compress_and_decompress(image: np.array, transform: CompressionTransform, compression: float) -> np.array:
+def compress_and_decompress(image: NDArray, transform: CompressionTransform, compression: float) -> NDArray:
     """
     Compresses and decompresses an image using the Fourier transform.
     This function can be used to see compression and decompression effects.

@@ -17,7 +17,7 @@ def convolve_with_stride(image: NDArray, kernel: NDArray, stride: int) -> NDArra
     return np.einsum("ijkl,kl->ij", strided_input, kernel)
 
 
-def conv1d_interpolate(x_measure: np.array, y_measure: np.array, x_interpolate: np.array, kernel: callable) -> np.array:
+def conv1d_interpolate(x_measure: NDArray, y_measure: NDArray, x_interpolate: NDArray, kernel: callable) -> NDArray:
     """
     Interpolate using a convolution kernel
 
@@ -29,12 +29,12 @@ def conv1d_interpolate(x_measure: np.array, y_measure: np.array, x_interpolate: 
     :return: y values of the interpolation
     """
     width = x_measure[1] - x_measure[0]  # store period between samples
-    kernels = [kernel(x_interpolate, offset=offset, width=width) for offset in x_measure]
+    kernels = np.asarray([kernel(x_interpolate, offset=offset, width=width) for offset in x_measure])
 
     return y_measure @ kernels
 
 
-def image_interpolate(image: np.array, kernel: callable, ratio: int) -> np.array:
+def image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     """Interpolate an image using a convolution kernel"""
 
     def row_column_interpolate(row: np.array) -> np.array:

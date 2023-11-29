@@ -1,7 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
 
 
-def apply_rgb(func: callable, image: np.array, *args, **kwargs) -> np.array:
+def apply_rgb(func: callable, image: NDArray, *args, **kwargs) -> NDArray:
     """
     Applies a function to each color channel of an image.
 
