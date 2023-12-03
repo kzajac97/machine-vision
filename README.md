@@ -25,5 +25,5 @@ for each class should all contain links to resources useful for given class.
 | Aliasing      | `classes/aliasing`      |           |
 | Interpolation | `classes/interpolation` | 1D and 2D |
 | Processing    | `classes/demosaicking`  |           |
-| Convolution   | TBA                     |           |  
+| Convolution   | `classes/convolution`   |           |  
 | Compression   | `classes/compression`   |           |
