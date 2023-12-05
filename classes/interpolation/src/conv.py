@@ -22,7 +22,7 @@ def conv1d_interpolate(x_measure: NDArray, y_measure: NDArray, x_interpolate: ND
 def image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     """Interpolate an image using a convolution kernel"""
 
-    def row_column_interpolate(row: np.array) -> np.array:
+    def row_column_interpolate(row: NDArray) -> NDArray:
         """Interpolate a single row or column of the image"""
         x_measure = np.arange(len(row))
         x_interpolate = np.linspace(0, len(row), ratio * len(row), endpoint=False)
@@ -32,6 +32,6 @@ def image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     return np.apply_along_axis(row_column_interpolate, 0, interpolated)
 
 
-def rgb_image_interpolate(image: np.array, kernel: callable, ratio: int) -> np.array:
+def rgb_image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     """Interpolate an RGB image by applying the image interpolation function to each channel"""
     return np.stack([image_interpolate(image[:, :, channel], kernel, ratio) for channel in range(3)], axis=2)
