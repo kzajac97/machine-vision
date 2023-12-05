@@ -1,9 +1,25 @@
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
 from numpy.typing import NDArray
+from scipy.ndimage import convolve
 
 
-def convolve_with_stride(image: NDArray, kernel: NDArray, stride: int, padding: int | None = None) -> NDArray:
+def _convolve(image: NDArray, kernel: NDArray, stride: int) -> NDArray:
+    """Convolve implementation for greyscale images with stride"""
+    if stride == 1:
+        return convolve(image, kernel)  # shorthand for convolve without stride
+
+    input_width, image_height = image.shape
+    kernel_width, kernel_height = kernel.shape
+    output_shape = ((input_width - kernel_width) // stride + 1, (image_height - kernel_height) // stride + 1)
+
+    # create a view of the input array with the desired strides
+    strides = (stride * image.strides[0], stride * image.strides[1]) + image.strides
+    strided_input = as_strided(image, shape=output_shape + (kernel_width, kernel_height), strides=strides)
+    return np.einsum("ijkl,kl->ij", strided_input, kernel)
+
+
+def convolve_with_stride(image: NDArray, kernel: NDArray, stride: int = 1, padding: int = 0) -> NDArray:
     """
     Convolve an image with a kernel using a given stride.
 
@@ -15,13 +31,10 @@ def convolve_with_stride(image: NDArray, kernel: NDArray, stride: int, padding: 
     if padding is not None:
         image = np.pad(image, padding, mode="constant")
 
-    # get the dimensions of the input array and the kernel
-    input_shape = image.shape
-    kernel_shape = kernel.shape
-    # calculate the shape of the output array
-    output_shape = ((input_shape[0] - kernel_shape[0]) // stride + 1, (input_shape[1] - kernel_shape[1]) // stride + 1)
+    if image.ndim == 3:  # RGB image
+        return np.dstack([_convolve(image[:, :, channel], kernel, stride) for channel in range(3)])
 
-    # create a view of the input array with the desired strides
-    strides = (stride * image.strides[0], stride * image.strides[1]) + image.strides
-    strided_input = as_strided(image, shape=output_shape + kernel_shape, strides=strides)
-    return np.einsum("ijkl,kl->ij", strided_input, kernel)
+    if image.ndim == 2:
+        return _convolve(image, kernel, stride)  # greyscale image
+
+    raise ValueError(f"Image shape {image.shape} not supported")
