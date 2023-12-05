@@ -1,20 +1,5 @@
 import numpy as np
-from numpy.lib.stride_tricks import as_strided
 from numpy.typing import NDArray
-
-
-def convolve_with_stride(image: NDArray, kernel: NDArray, stride: int) -> NDArray:
-    """Convolve an image with a kernel using a given stride."""
-    # get the dimensions of the input array and the kernel
-    input_shape = image.shape
-    kernel_shape = kernel.shape
-    # calculate the shape of the output array
-    output_shape = ((input_shape[0] - kernel_shape[0]) // stride + 1, (input_shape[1] - kernel_shape[1]) // stride + 1)
-
-    # create a view of the input array with the desired strides
-    strides = (stride * image.strides[0], stride * image.strides[1]) + image.strides
-    strided_input = as_strided(image, shape=output_shape + kernel_shape, strides=strides)
-    return np.einsum("ijkl,kl->ij", strided_input, kernel)
 
 
 def conv1d_interpolate(x_measure: NDArray, y_measure: NDArray, x_interpolate: NDArray, kernel: callable) -> NDArray:
@@ -37,7 +22,7 @@ def conv1d_interpolate(x_measure: NDArray, y_measure: NDArray, x_interpolate: ND
 def image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     """Interpolate an image using a convolution kernel"""
 
-    def row_column_interpolate(row: np.array) -> np.array:
+    def row_column_interpolate(row: NDArray) -> NDArray:
         """Interpolate a single row or column of the image"""
         x_measure = np.arange(len(row))
         x_interpolate = np.linspace(0, len(row), ratio * len(row), endpoint=False)
@@ -47,6 +32,6 @@ def image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     return np.apply_along_axis(row_column_interpolate, 0, interpolated)
 
 
-def rgb_image_interpolate(image: np.array, kernel: callable, ratio: int) -> np.array:
+def rgb_image_interpolate(image: NDArray, kernel: callable, ratio: int) -> NDArray:
     """Interpolate an RGB image by applying the image interpolation function to each channel"""
     return np.stack([image_interpolate(image[:, :, channel], kernel, ratio) for channel in range(3)], axis=2)
