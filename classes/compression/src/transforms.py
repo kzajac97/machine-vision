@@ -12,12 +12,10 @@ class CompressionTransform:
     """
 
     @abstractmethod
-    def forward(self, variables: NDArray) -> NDArray:
-        ...
+    def forward(self, variables: NDArray) -> NDArray: ...
 
     @abstractmethod
-    def backward(self, variables: NDArray) -> NDArray:
-        ...
+    def backward(self, variables: NDArray) -> NDArray: ...
 
 
 class FourierTransform2D(CompressionTransform):
