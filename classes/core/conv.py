@@ -14,13 +14,16 @@ def _full_conv(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0
 
     # n = tracking index(for step = 1, equal to ((x + p) + m - 1) / s
     # y = output, x = signal, k = kernel, m = len(kernel)
+
     # y[0] = x[0]k[0]
     # y[1] = x[0]k[1] + x[1]k[0]
     # y[2] = x[0]k[2] + x[1]k[1] + x[2]k[0]
     # ...
-    # y[n] = x[0]k[n] + x[1]k[n-1] + ... + x[n]k[0]
+    # y[m] = x[0]k[m] + x[1]k[m-1] + ... + x[m]k[0]  # first full kernel overlap
     # ...
-    # y[n + m] = x[n] k[m]
+    # y[n] = x[n]k[m] + x[1]k[m-1] + ... + x[n+m]k[0]  # full overlap when n > m
+    # ...
+    # y[n + m - 1] = x[n] k[m]  # last output element
     for conv_step in range(output_size):
         for kernel_step in range(len(kernel)):
             index = conv_step * step - kernel_step  # note: tracking index can be negative here
