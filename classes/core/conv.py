@@ -4,7 +4,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-def _full_conv(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0):
+def _full_conv1d(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0):
     padded = np.pad(signal, padding)  # zero-pad on both sides
     # compute aligned length of output signal
     # ((x + p) + m - 1) / s  (m = len(kernel), p = padding, s = step)
@@ -19,7 +19,7 @@ def _full_conv(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0
     # y[1] = x[0]k[1] + x[1]k[0]
     # y[2] = x[0]k[2] + x[1]k[1] + x[2]k[0]
     # ...
-    # y[m] = x[0]k[m] + x[1]k[m-1] + ... + x[m]k[0]  # first full kernel overlap
+    # y[m] = x[0]k[m] + x[1]k[m-1] + ... + x[m]k[0]  # first full kernel overlap (for n == m this happens once)
     # ...
     # y[n] = x[n]k[m] + x[1]k[m-1] + ... + x[n+m]k[0]  # full overlap when n > m
     # ...
@@ -34,7 +34,7 @@ def _full_conv(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0
     return np.asarray(output)
 
 
-def _valid_conv(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0) -> NDArray:
+def _valid_conv1d(signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0) -> NDArray:
     # reverse the kernel -> needed for simplified implementation to agree with mathematical definition
     kernel = kernel[::-1]
     padded = np.pad(signal, padding)  # zero-pad on both sides
@@ -59,21 +59,30 @@ def convolve(
     signal: NDArray, kernel: NDArray, step: int = 1, padding: int = 0, mode: Literal["full", "valid"] = "full"
 ) -> NDArray:
     """
-    Educational implementation of `np.convolve` for 1D signals with 1D kernels with step and padding support.
+    Educational implementation of `np.convolve` for 1D or 2D signals and kernels with step and padding support.
     See: https://numpy.org/doc/2.1/reference/generated/numpy.convolve.html for more.
 
-    :param signal: Any 1D signal
-    :param kernel: 1D kernel
+    :param signal: Supports 1D and 2D signals
+    :param kernel: Kernel to convolve with the signal, must have the same dimensionality as the signal
     :param step: step size for the convolution
     :param padding: input padding for the convolution, applied to signal on both sides
     :param mode: "full" or "valid" mode for the convolution:
                  "full" returns the convolution at each point of overlap
                  "valid" returns convolution, only for points where the signals overlap completely
     """
-    match mode:
-        case "full":
-            return _full_conv(signal, kernel, step, padding)
-        case "valid":
-            return _valid_conv(signal, kernel, step, padding)
-        case _:
+    if signal.ndim != kernel.ndim:
+        raise ValueError("Signal and kernel must have the same dimensionality!")
+
+    dim = signal.ndim
+
+    match mode, dim:
+        case "full", 1:
+            return _full_conv1d(signal, kernel, step, padding)
+        case "valid", 1:
+            return _valid_conv1d(signal, kernel, step, padding)
+        case "full", 2:
+            ...
+        case "valid", 2:
+            ...
+        case _, _:
             raise ValueError(f"Unknown mode: {mode}")
