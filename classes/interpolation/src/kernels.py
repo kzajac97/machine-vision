@@ -59,7 +59,7 @@ def nearest_neighbour_kernel2d(xy: NDArray, offset: float, width: float) -> NDAr
 
 
 def linear_kernel2d(xy: NDArray, offset: float, width: float) -> NDArray:
-    """Nearest neighbour interpolation kernel"""
+    """Linear interpolation kernel."""
     xy = xy - offset
     xy = xy / width
     x, y = xy[:, 0], xy[:, 1]

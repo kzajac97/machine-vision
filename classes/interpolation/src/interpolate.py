@@ -73,13 +73,14 @@ def create_grid(limits: tuple[int, int], shape: tuple[int, int]) -> NDArray:
     return np.vstack([yy.ravel(), xx.ravel()]).T
 
 
-def image_interpolate2d(image: NDArray, kernel: KernelCallable, ratio: int) -> NDArray:
+def image_interpolate2d(image: NDArray, kernel: KernelCallable, ratio: int, eps: float = float(0)) -> NDArray:
     """
     Interpolate image using 2D kernel interpolation
 
     :param image: grayscale image to interpolate as 2D NDArray
     :param kernel: Callable interpolation kernel accepting 2D grid, offset and width
     :param ratio: up-scaling factor
+    :param eps: width correction coefficient to avoid overlapping kernels (use for sinc and keys kernels)
 
     :return: interpolated image as 2D NDArray
     """
@@ -93,7 +94,7 @@ def image_interpolate2d(image: NDArray, kernel: KernelCallable, ratio: int) -> N
 
     interpolated = np.zeros(target_shape)  # do not store all kernels to save memory in 2D
     for point, value in zip(image_grid, image.ravel()):
-        kernel_value = value * kernel(interpolate_grid, offset=point, width=1)  # type: ignore
+        kernel_value = value * kernel(interpolate_grid, offset=point, width=(1 - eps))  # type: ignore
         interpolated += kernel_value.reshape(target_shape)
 
     return interpolated
