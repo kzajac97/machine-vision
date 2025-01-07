@@ -57,14 +57,18 @@ def image_interpolate1d(image: NDArray, kernel: KernelCallable, ratio: int) -> N
     return np.apply_along_axis(row_column_interpolate, 0, interpolated)
 
 
-def _image_grid(shape: tuple[int, int], spacing: float = float(1)) -> NDArray:
+def create_grid(limits: tuple[int, int], shape: tuple[int, int]) -> NDArray:
     """
-    Create a grid of x and y axes for an image. Given `spacing` different from 1 will create interpolation grid.
-    Grid is returns as a 2D array with shape (n, 2) where n is the number of points in the grid.
+    Creates grid of points, which are indexing the image.
+
+    :param limits: maximum row and column values, the image size before interpolation
+    :param shape: image shape, for interpolation-grid image_shape is different from limits
     """
+    max_row_value, max_column_value = limits
     height, width = shape
-    x = np.arange(0, width, spacing)
-    y = np.arange(0, height, spacing)
+
+    x = np.linspace(1, width, max_row_value, endpoint=True)
+    y = np.linspace(1, height, max_column_value, endpoint=True)
     xx, yy = np.meshgrid(x, y)
     return np.vstack([yy.ravel(), xx.ravel()]).T
 
@@ -80,12 +84,12 @@ def image_interpolate2d(image: NDArray, kernel: KernelCallable, ratio: int) -> N
     :return: interpolated image as 2D NDArray
     """
     target_shape = np.asarray(image.shape) * ratio
-    # create grid of 2D points, which are indexing the image
-    # [0,0], [0,1], [0,2], ... [1,0], [1,1], [1,2], ... [W,H]
-    image_grid = _image_grid(image.shape, spacing=1)  # type: ignore
-    # create grid of 2D points, which are indexing the interpolated image with the same range as original image
-    # [0,0], [0,1/ratio], [0,2/ratio], ... [1/ratio,0], [1/ratio,1/ratio], [1/ratio,2/ratio], ... [W,H]
-    interpolate_grid = _image_grid(image.shape, spacing=1 / ratio)  # type: ignore
+    # create indexing for image starting from 1 as array of 2D points (shape: [H*W, 2])
+    # [1,1], [1,2], [1,3], ..., [2,1], [2,2], [2,3], ... [H,W]
+    image_grid = create_grid(image.shape, image.shape)  # type: ignore
+    # create indexing for interpolation grid, filling points in-between points from image grid
+    # [1,1], [1, 1 + 1/ratio], [1, 1 + 2/ratio], ..., [H, W]
+    interpolate_grid = create_grid(target_shape, image.shape)  # type: ignore
 
     interpolated = np.zeros(target_shape)  # do not store all kernels to save memory in 2D
     for point, value in zip(image_grid, image.ravel()):
