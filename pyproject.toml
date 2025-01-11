@@ -1,0 +1,48 @@
+[project]
+name = "Singal and Image Processing/Machine Vision"
+version = "1.0"
+description = "Code for 'Signal and Image Processing' and 'Machine Vision' classes @ PWr"
+license = {text = "MIT"}
+readme = {file = "README.md", content-type = "text/markdown"}
+authors = [
+    {name = "Krzysztof Zając", email = "krzysztof.zajac@pwr.edu.pl"}
+]
+
+requires-python = ">= 3.11"
+
+# linter and test settings
+[tool.black]
+line-length = 120
+target-version = ['py312']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = 'black'
+line_length = 120
+py_version = 312
+
+[tool.mypy]
+exclude = [
+    'venv',
+    '\.venv',
+    '\.git',
+    '__pycache__',
+    'build',
+    'dist',
+    'tests',
+]
+
+[[tool.mypy.overrides]]
+module = [
+  "numpy.*",
+  "sklearn.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",  # used to filter deprecation warning from lightning/pytorch/__init__.py:37
+    "ignore::UserWarning",
+    'ignore:function ham\(\) is deprecated:DeprecationWarning',
+]

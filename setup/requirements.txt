@@ -1,8 +1,0 @@
-numpy
-scikit-learn
-scikit-image
-scipy
-matplotlib
-seaborn
-pandas
-jupyter
