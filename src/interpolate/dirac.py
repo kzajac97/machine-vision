@@ -15,18 +15,19 @@ def dirac_interpolate(
     :param kernel_width: kernel width, needs to be selected according to the kernel used and number of samples
     :param kernel: kernel as callable numpy function
     """
+    if not isinstance(ratio, int):
+        raise ValueError("Interpolation ratio must be an integer!")
+
     # create new interpolation x-axis and y-axis
     # those have length ratio * len(x_measure) + kernel_size to account for decrease in size from valid convolution
-    interpolate_size = ratio * len(x_measure) + kernel_size
-    x_interpolate = np.linspace(x_measure[0], x_measure[-1], interpolate_size)
+    x_interpolate = np.linspace(x_measure[0], x_measure[-1], ratio * len(x_measure))
     y_interpolate = np.zeros(len(x_interpolate))
     # compute kernel ratio and prefill y_interpolate with measured values
     # this creates a representation of the original function as dirac delta functions in the target domain,
     # where x-axis is the size expected after interpolation
-    ratio_to_kernel = len(y_interpolate) // kernel_size
-    y_interpolate[::ratio_to_kernel] = y_measure
+    y_interpolate[::ratio] = y_measure
     # create centred kernel on -1 to 1 range with given width
-    x_kernel = np.linspace(-1, 1, kernel_size + 1)
+    x_kernel = np.linspace(-1, 1, kernel_size)
     y_kernel = kernel(x_kernel, offset=0, width=kernel_width)
     # return valid convolution, which will contain interpolation
-    return np.convolve(y_interpolate, y_kernel, mode="valid")
+    return np.convolve(y_interpolate, y_kernel, mode="same")
