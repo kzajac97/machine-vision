@@ -50,7 +50,7 @@ def _valid_conv1d(signal: NDArray, kernel: NDArray, step: int = 1, padding: int 
         if index + kernel_size <= len(signal):  # needed, when len(single) is not multiple of kernel_size or step
             # sum of aligned element-wise multiplication of signal and kernel
             # x is the signal, k is the kernel, n is tracking index and m = len(kernel)
-            # x[n] + k[n] + x[n+1] + k[n+1] + ... + x[n+m] + k[m]
+            # x[n]k[n] + x[n+1]k[n+1] + ... + x[n+m]k[m]
             output[conv_step] = np.sum(signal[index : index + kernel_size] * kernel)
 
     return output
